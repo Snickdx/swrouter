@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li><a href="javascript: router.navigate('/page1')">Page 1</a></li>
+        <li><a href="javascript: router.navigate('/page2')">Page 2</a></li>
+    </ul>
+    <main id="content">
+        outlet
+    </main>
+
+    <script src="route-config.js"></script>
+    <script type="module">
+        // https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import
+
+        import Router from './router.js'
+        const router = new Router(routeConfig, window);
+     
+    </script>
+</body>
+</html>
