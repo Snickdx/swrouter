@@ -19,6 +19,7 @@ export default class Router {
 
     this.routerOutlet = document.querySelector(selector);
     
+    // https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import
     window.router = this;
     
     window.addEventListener('popstate',  e => this.handleBack(e) );

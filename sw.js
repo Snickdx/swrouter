@@ -8,13 +8,10 @@ const filesToCache = [
           'page2.js',
           'page1.html',
           'page2.html',
-          'route-config.js',
           'router.js'
         ];
 
-const staticCacheName = 'cache-v6';
-
-importScripts('./route-config.js');
+const staticCacheName = 'cache-v9';
 
 //Setting up precaching
 self.addEventListener('install', async event => {

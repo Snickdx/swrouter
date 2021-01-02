@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="page3.js"></script>
 </head>
 <body>
     <ul>
@@ -14,12 +15,26 @@
         outlet
     </main>
 
-    <script src="route-config.js"></script>
     <script type="module">
-        // https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import
-
+        
         import Router from './router.js'
-        const router = new Router(routeConfig, window);
+        const router = new Router(
+            {
+                routes:[
+                    {
+                        url:'/page1',
+                        modulePath: './page1.js',
+                        base: true
+                    }, 
+                    {
+                        url:'/page2',
+                        modulePath : './page2.js'
+                    }
+                ],
+                selector: '#content'
+            }, 
+            window
+        );
      
     </script>
 </body>
