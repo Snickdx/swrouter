@@ -9,15 +9,16 @@ function registerSW(cb){
 
 export default class Router {
 
-  constructor({routes, selector}, window){
+  constructor({routes, outlet}, window){
 
     this.routes = this.loadRoutes(routes);
     this.baseRoute = routes.filter(route=>"base" in route)[0];
+    this.current = null;
     
     if(this.baseRoute === undefined)
       throw 'No base route error';
 
-    this.routerOutlet = document.querySelector(selector);
+    this.routerOutlet = outlet;
     
     // https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import
     window.router = this;
@@ -32,9 +33,10 @@ export default class Router {
   loadRoutes(routes){
     return routes.reduce(
             (acc, cur)=>{
-              cur.module = import(cur.modulePath); 
+
               acc[cur.url] = cur;
               return acc;
+
             }, {});
   }
 
@@ -43,22 +45,6 @@ export default class Router {
       this.navigate(window.location.pathname);
     else
       this.navigate(this.baseRoute.url);
-  }
-
-  async executeRouteModule(url){
-    if(!(url in this.routes))
-      throw `Unknown route: ${url}`;
-    const module = await this.routes[url].module;
-    module.run();
-  }
-
-  async fetchRender(url){
-    try{
-      let response = await fetch(url);
-      this.routerOutlet.innerHTML = await response.text();
-    }catch(e){
-      console.error(e);
-    }
   }
 
   getTitle(url){
@@ -71,8 +57,12 @@ export default class Router {
     const title = this.getTitle(url);
     history.pushState( {title, url}, title, url);
     document.title = title;
-    await this.fetchRender(`${url}.html`);
-    this.executeRouteModule(url);
+    const prev = this.routerOutlet.childNodes[0];
+    if(prev)
+      this.routerOutlet.removeChild(prev);
+      
+    this.current = this.routes[url];
+    this.routerOutlet.appendChild(this.current);
   }
 
   handleBack(event){

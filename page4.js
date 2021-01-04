@@ -2,13 +2,13 @@ const template = document.createElement('template');
 template.innerHTML = `
     <style>
     </style>
-    <h1>Page 3</h1>
+    <h1>Page 4</h1>
     <p>
     
     </p>
 `;
 
-export default class Page3 extends HTMLElement{
+export default class Page4 extends HTMLElement{
 
     connectedCallback(){
         console.log('component loaded');

@@ -45,7 +45,7 @@ self.addEventListener('activate', event => {
 });
 
 //returns a cached response or undefined
-async function checkCache(request){
+function checkCache(request){
   return caches.match(request);
 }
 
@@ -79,6 +79,7 @@ async function cacheFirstRequest(request){
         cacheResponse(request.url, clone);
         return newResponse;
       }
+      
     }
 
   }catch(e){
